@@ -3,7 +3,7 @@ module github.com/mach-composer/mach-composer-plugin-algolia
 go 1.21
 
 require (
-	github.com/creasty/defaults v1.7.0
+	github.com/creasty/defaults v1.8.0
 	github.com/mach-composer/mach-composer-plugin-sdk v1.0.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/stretchr/testify v1.9.0
