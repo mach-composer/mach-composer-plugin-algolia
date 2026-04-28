@@ -12,7 +12,7 @@ permissions:
 jobs:
   dependabot-changie:
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]'
+    if: github.actor_id == '49699333'
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -29,7 +29,7 @@ jobs:
           version: latest
           args: new --body "${{ github.event.pull_request.title }}" --kind Dependency
 
-      - uses: stefanzweifel/git-auto-commit-action@v7-next
+      - uses: stefanzweifel/git-auto-commit-action@acbe8b15bfea3c08ecd23f3a982067a91e34533e # v7-next
         with:
           commit_message: "chore(deps): add changelog for dependabot updates"
           commit_user_name: "dependabot[bot]"

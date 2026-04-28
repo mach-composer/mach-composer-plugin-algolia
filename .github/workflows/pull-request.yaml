@@ -21,6 +21,7 @@ jobs:
         uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5.6.0
         with:
           go-version-file: go.mod
+          cache: false
 
       - name: Set up Task
         uses: arduino/setup-task@b91d5d2c96a56797b48ac1e0e89220bf64044611 # v2.0.0
@@ -29,7 +30,7 @@ jobs:
 
       - name: Has changes file
         if: github.actor != 'dependabot[bot]'
-        uses: mach-composer/check-changie-changes-action@main
+        uses: mach-composer/check-changie-changes-action@7a4054d1842bb867a0a2c459f154f821e7a50cc2 # main
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@55c2c1448f86e01eaae002a5a3a9624417608d84 # v6.5.2
