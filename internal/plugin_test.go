@@ -79,30 +79,6 @@ func TestRenderTerraformResourcesMultiApplication(t *testing.T) {
 	`), normalize(result))
 }
 
-func TestRenderTerraformResourcesMultiApplicationDefaultProvider(t *testing.T) {
-	p := NewAlgoliaPlugin()
-	err := p.SetSiteConfig("test-site", map[string]any{
-		"applications": []any{
-			map[string]any{
-				"name":    "algolia",
-				"api_key": "default-key",
-				"app_id":  "default-app",
-			},
-		},
-	})
-	require.NoError(t, err)
-
-	result, err := p.RenderTerraformResources("test-site")
-	require.NoError(t, err)
-
-	assert.Equal(t, normalize(`
-		provider "algolia" {
-			api_key = "default-key"
-			app_id  = "default-app"
-		}
-	`), normalize(result))
-}
-
 func TestRenderTerraformComponentSingleApplication(t *testing.T) {
 	p := NewAlgoliaPlugin()
 	err := p.SetSiteConfig("test-site", map[string]any{
@@ -139,25 +115,6 @@ func TestRenderTerraformComponentMultiApplication(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.Equal(t, []string{"algolia = algolia.lab_digital"}, result.Providers)
-}
-
-func TestRenderTerraformComponentMultiApplicationDefaultProvider(t *testing.T) {
-	p := NewAlgoliaPlugin()
-	err := p.SetSiteConfig("test-site", map[string]any{
-		"applications": []any{
-			map[string]any{
-				"name":    "algolia",
-				"api_key": "default-key",
-				"app_id":  "default-app",
-			},
-		},
-	})
-	require.NoError(t, err)
-
-	result, err := p.RenderTerraformComponent("test-site", "algolia")
-	require.NoError(t, err)
-
-	assert.Empty(t, result.Providers)
 }
 
 func TestRenderTerraformComponentMultiApplicationNotFound(t *testing.T) {

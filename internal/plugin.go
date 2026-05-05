@@ -115,7 +115,7 @@ func (p *Plugin) TerraformRenderResources(site string) (string, error) {
 		{{- if .IsMultiApplication }}
 		{{- range .Applications }}
 		provider "algolia" {
-			{{if ne .Name "algolia" }}{{ renderProperty "alias" .Name }}{{ end }}
+			{{ renderProperty "alias" .Name }}
 			{{ renderProperty "api_key" .ApiKey }}
 			{{ renderProperty "app_id" .AppId }}
 		}
@@ -136,10 +136,6 @@ func (p *Plugin) RenderTerraformComponent(site string, component string) (*schem
 		application := cfg.GetApplicationConfig(component)
 		if application == nil {
 			return nil, NewNoApplicationConfigError("application %s not found in site %s. An application must exist with the same name as the component", component, site)
-		}
-
-		if component == "algolia" {
-			return &schema.ComponentSchema{}, nil
 		}
 
 		return &schema.ComponentSchema{
