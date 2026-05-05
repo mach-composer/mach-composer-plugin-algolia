@@ -134,14 +134,21 @@ func (p *Plugin) RenderTerraformComponent(site string, component string) (*schem
 	cfg := p.getSiteConfig(site)
 	if cfg != nil && cfg.IsMultiApplication() {
 		application := cfg.GetApplicationConfig(component)
-		if application == nil {
-			return nil, NewNoApplicationConfigError("application %s not found in site %s. An application must exist with the same name as the component", component, site)
+		if application != nil {
+			return &schema.ComponentSchema{
+				Providers: []string{
+					fmt.Sprintf("algolia = algolia.%s", component),
+				},
+			}, nil
+		}
+
+		providers := make([]string, 0, len(cfg.Applications))
+		for _, application := range cfg.Applications {
+			providers = append(providers, fmt.Sprintf("algolia.%s = algolia.%s", application.Name, application.Name))
 		}
 
 		return &schema.ComponentSchema{
-			Providers: []string{
-				fmt.Sprintf("algolia = algolia.%s", component),
-			},
+			Providers: providers,
 		}, nil
 	}
 

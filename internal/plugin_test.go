@@ -126,14 +126,22 @@ func TestRenderTerraformComponentMultiApplicationNotFound(t *testing.T) {
 				"api_key": "lab-digital-key",
 				"app_id":  "lab-digital-app",
 			},
+			map[string]any{
+				"name":    "mach_composer",
+				"api_key": "mach-composer-key",
+				"app_id":  "mach-composer-app",
+			},
 		},
 	})
 	require.NoError(t, err)
 
-	var customErr = &NoApplicationConfigError{}
+	result, err := p.RenderTerraformComponent("test-site", "shared_config")
+	require.NoError(t, err)
 
-	_, err = p.RenderTerraformComponent("test-site", "mach_composer")
-	assert.ErrorAs(t, err, &customErr)
+	assert.Equal(t, []string{
+		"algolia.lab_digital = algolia.lab_digital",
+		"algolia.mach_composer = algolia.mach_composer",
+	}, result.Providers)
 }
 
 func TestSetSiteConfigEmpty(t *testing.T) {
