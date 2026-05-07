@@ -32,6 +32,12 @@ Use `applications` when a single Mach Composer site needs to configure multiple
 Algolia applications. The application `name` is linked to the component with the
 same name and must be a valid Terraform provider alias.
 
+> [!WARNING]
+> Do not switch an existing site from single application configuration to
+> multiple applications without a migration. The Terraform resource keys differ
+> between the two modes, so switching directly would make Terraform delete the
+> existing configured Algolia data and recreate it under the new keys.
+
 ```yaml
 mach_composer:
   version: 1
