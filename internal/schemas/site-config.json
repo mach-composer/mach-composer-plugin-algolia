@@ -1,17 +1,43 @@
 {
-    "type": "object",
-    "description": "algolia configuration.",
-    "additionalProperties": false,
-    "required": [
-        "api_key",
-        "app_id"
-    ],
-    "properties": {
-        "api_key": {
+  "type": "object",
+  "description": "algolia configuration.",
+  "additionalProperties": false,
+  "properties": {
+    "api_key": {
+      "description": "The Algolia API key. Either this and app_id must be set, or applications must be set.",
+      "type": "string"
+    },
+    "app_id": {
+      "description": "The Algolia application ID. Either this and api_key must be set, or applications must be set.",
+      "type": "string"
+    },
+    "applications": {
+      "description": "Algolia applications to use. Either this must be set, or api_key and app_id must be set.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "api_key",
+          "app_id"
+        ],
+        "properties": {
+          "name": {
+            "description": "The application name. Will be linked to the component with the same name and must be a valid Terraform provider alias.",
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          },
+          "api_key": {
+            "description": "The Algolia API key.",
             "type": "string"
-        },
-        "app_id": {
+          },
+          "app_id": {
+            "description": "The Algolia application ID.",
             "type": "string"
+          }
         }
+      }
     }
+  }
 }
